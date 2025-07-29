@@ -1,7 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-
-import { useQuery, useMutation } from "@tanstack/react-query";
-
+import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import { FaEdit, FaSave } from "react-icons/fa";
 import { AuthContext } from "../provider/AuthContext";
@@ -15,7 +13,7 @@ const MyProfile = () => {
   const axiosSecure = useAxiosSecure();
   const { loading } = useAuth();
 
-  const { data: userData = {}, isPending } = useQuery({
+  const { data: userData = {} } = useQuery({
     queryKey: ["userProfile", user?.email],
     enabled: !loading && !!user?.email,
     queryFn: async () => {
@@ -35,25 +33,18 @@ const MyProfile = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const mutation = useMutation({
-    mutationFn: async (updatedData) => {
-      const res = await useAxiosSecure.patch(
-        `/users/${user?.email}`,
-        updatedData
-      );
-      return res.data;
-    },
-    onSuccess: () => {
-      toast.success("Profile updated successfully");
-      setIsEditing(false);
-      refetch();
-    },
-    onError: () => toast.error("Failed to update profile"),
-  });
-
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-    mutation.mutate(formData);
+
+    try {
+      const res = await axiosSecure.patch(`/users/${user.email}`, formData);
+      setFormData(formData); // update formData with latest saved data
+      setIsEditing(false);
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      toast.error("Failed to update profile");
+      console.error("Update error:", error);
+    }
   };
 
   if (loading) return <p>Loading profile...</p>;
@@ -79,11 +70,14 @@ const MyProfile = () => {
         )}
       </div>
 
-      <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form
+        className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        onSubmit={handleSave}
+      >
         <div>
           <label className="label">Name</label>
           <input
-            name="name"
+            name="displayName"
             value={formData?.displayName || ""}
             onChange={handleInputChange}
             disabled={!isEditing}
@@ -147,7 +141,7 @@ const MyProfile = () => {
         <div>
           <label className="label">Avatar URL</label>
           <input
-            name="photo"
+            name="photoURL"
             value={formData?.photoURL || ""}
             onChange={handleInputChange}
             disabled={!isEditing}
@@ -155,10 +149,10 @@ const MyProfile = () => {
           />
         </div>
 
-        <div className="col-span-2 text-center border-red-600">
+        <div className="col-span-2 text-center">
           {formData?.photoURL && (
             <img
-              src={formData?.photoURL}
+              src={formData.photoURL}
               alt="Avatar"
               className="w-24 h-24 rounded-full mx-auto mt-2 border-2 border-primary"
             />
