@@ -5,6 +5,8 @@ import { FaEdit, FaSave } from "react-icons/fa";
 import { AuthContext } from "../provider/AuthContext";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useAuth from "../hooks/useAuth";
+import districtsData from "../assets/data/districts.json";
+import upazilasData from "../assets/data/upazilas.json";
 
 const MyProfile = () => {
   const { user } = useContext(AuthContext);
@@ -13,7 +15,7 @@ const MyProfile = () => {
   const axiosSecure = useAxiosSecure();
   const { loading } = useAuth();
 
-  const { data: userData = {} } = useQuery({
+  let { data: userData = {} } = useQuery({
     queryKey: ["userProfile", user?.email],
     enabled: !loading && !!user?.email,
     queryFn: async () => {
@@ -27,6 +29,11 @@ const MyProfile = () => {
       setFormData(userData);
     }
   }, [userData]);
+
+  const districtName =
+    districtsData.find((d) => d.id === formData.district)?.name || "";
+  const upazilaName =
+    upazilasData.find((u) => u.id === formData.upazila)?.name || "";
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -95,26 +102,65 @@ const MyProfile = () => {
           />
         </div>
 
+        {/* District field */}
         <div>
           <label className="label">District</label>
-          <input
-            name="district"
-            value={formData?.district || ""}
-            onChange={handleInputChange}
-            disabled={!isEditing}
-            className="input input-bordered w-full"
-          />
+          {!isEditing ? (
+            // Show name as readonly input or plain text
+            <input
+              name="district"
+              value={districtName || ""}
+              disabled
+              className="input input-bordered w-full bg-gray-100 cursor-not-allowed"
+            />
+          ) : (
+            // Show select dropdown for editing
+            <select
+              name="district"
+              value={formData?.district || ""}
+              onChange={handleInputChange}
+              className="select select-bordered w-full"
+              required
+            >
+              <option value="">Select District</option>
+              {districtsData.map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.name}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
 
+        {/* Upazila field */}
         <div>
           <label className="label">Upazila</label>
-          <input
-            name="upazila"
-            value={formData?.upazila || ""}
-            onChange={handleInputChange}
-            disabled={!isEditing}
-            className="input input-bordered w-full"
-          />
+          {!isEditing ? (
+            <input
+              name="upazila"
+              value={upazilaName || ""}
+              disabled
+              className="input input-bordered w-full bg-gray-100 cursor-not-allowed"
+            />
+          ) : (
+            <select
+              name="upazila"
+              value={formData?.upazila || ""}
+              onChange={handleInputChange}
+              className="select select-bordered w-full"
+              required
+              disabled={!formData.district} // Disable until district selected
+            >
+              <option value="">Select Upazila</option>
+              {upazilasData
+                .filter((u) => u.district_id === formData.district)
+                .map((u) => (
+                  <option key={u.id} value={u.id}>
+                    {u.name}
+                  </option>
+                ))}
+            </select>
+          )}
         </div>
 
         <div>
