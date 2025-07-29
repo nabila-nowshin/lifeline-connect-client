@@ -4,6 +4,7 @@ import districtsData from "../assets/data/districts.json";
 import upazilasData from "../assets/data/upazilas.json";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const CreateDonationRequest = () => {
   const { user } = useContext(AuthContext);
@@ -50,8 +51,31 @@ const CreateDonationRequest = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  //get user status for users
+  let { data: userStatus = {} } = useQuery({
+    queryKey: ["status", user?.email],
+    enabled: !loading && !!user?.email,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${user.email}`);
+      return res.data.status;
+    },
+  });
+
+  //   console.log(userStatus);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log(user.status);
+
+    if (userStatus !== "active") {
+      Swal.fire({
+        icon: "error",
+        title: "Access Denied",
+        text: "Your account is blocked and cannot create donation requests.",
+      });
+      return;
+    }
     setLoading(true);
 
     // Basic validation (can be improved)

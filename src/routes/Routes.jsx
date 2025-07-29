@@ -9,6 +9,7 @@ import DashboardLayout from "../pages/Dashboard/DashboardLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import MyProfile from "../pages/MyProfile";
 import CreateDonation from "../pages/CreateDonation";
+import EditDonationRequest from "../pages/EditDonationRequest";
 
 export const router = createBrowserRouter([
   {

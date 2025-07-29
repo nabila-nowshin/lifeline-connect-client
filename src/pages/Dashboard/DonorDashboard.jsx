@@ -1,5 +1,6 @@
 import React, { use } from "react";
 import { AuthContext } from "../../provider/AuthContext";
+import RecentDonationRequests from "../RecentDonationRequests";
 
 const DonorDashboard = () => {
   const { user } = use(AuthContext);
@@ -13,6 +14,8 @@ const DonorDashboard = () => {
         Thank you for being a donor. You can manage your donations and view
         donation history from here.
       </p>
+
+      <RecentDonationRequests></RecentDonationRequests>
     </div>
   );
 };
