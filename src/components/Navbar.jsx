@@ -4,10 +4,10 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../provider/AuthContext";
 
 const Navbar = () => {
-  const { user, logOut, loading } = useContext(AuthContext);
+  const { user, signOutUser, loading } = useContext(AuthContext);
 
   const handleLogout = () => {
-    logOut()
+    signOutUser()
       .then(() => toast.success("Logged out successfully"))
       .catch(() => toast.error("Logout failed"));
   };
