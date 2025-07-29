@@ -25,19 +25,19 @@ const Navbar = () => {
         </NavLink>
       </li>
       <li>
+        <NavLink to="/donation" className={navLinkClasses}>
+          Donation Requests
+        </NavLink>
+      </li>
+      <li>
         <NavLink to="/blogs" className={navLinkClasses}>
           Blogs
         </NavLink>
       </li>
-      <li>
-        <NavLink to="/about" className={navLinkClasses}>
-          About
-        </NavLink>
-      </li>
       {user && (
         <li>
-          <NavLink to="/dashboard" className={navLinkClasses}>
-            Dashboard
+          <NavLink to="/fundings" className={navLinkClasses}>
+            Funding Links
           </NavLink>
         </li>
       )}
@@ -112,8 +112,8 @@ const Navbar = () => {
                 className="menu dropdown-content bg-base-100 rounded-box p-3 mt-2 shadow-md w-48"
               >
                 <li>
-                  <NavLink to="/profile" className={navLinkClasses}>
-                    My Profile
+                  <NavLink to="/dashboard" className={navLinkClasses}>
+                    Dashboard
                   </NavLink>
                 </li>
                 <li>

@@ -24,7 +24,6 @@ const Register = () => {
     email: "",
     password: "",
     confirm_password: "",
-    avatarFile: null,
     bloodGroup: "",
     district: "",
     upazila: "",
@@ -47,12 +46,8 @@ const Register = () => {
   }, [formData.district, upazilas]);
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "avatarFile") {
-      setFormData({ ...formData, avatarFile: files[0] });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const validatePassword = (password) => {
@@ -62,7 +57,6 @@ const Register = () => {
     return uppercase && lowercase && minLength;
   };
 
-  //upload image
   const uploadAvatarToImageBB = async (file) => {
     if (!file) return null;
     const formDataImg = new FormData();
@@ -81,17 +75,17 @@ const Register = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const {
-      name,
-      email,
-      password,
-      confirm_password,
-      avatarFile,
-      bloodGroup,
-      district,
-      upazila,
-    } = formData;
+    const form = e.target;
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const password = form.password.value;
+    const confirm_password = form.confirm_password.value;
+    const bloodGroup = form.bloodGroup.value;
+    const district = form.district.value;
+    const upazila = form.upazila.value;
+    const avatarFile = form.avatarFile.files[0];
 
     // Validate password
     if (!validatePassword(password)) {
@@ -103,6 +97,7 @@ const Register = () => {
       if (password.length < 6) msg += "<li>Be at least 6 characters long</li>";
       msg += "</ul>";
       Swal.fire({ icon: "error", title: "Invalid Password", html: msg });
+      setLoading(false);
       return;
     }
 
@@ -112,6 +107,7 @@ const Register = () => {
         title: "Password Mismatch",
         text: "Confirm password does not match.",
       });
+      setLoading(false);
       return;
     }
 
@@ -121,10 +117,10 @@ const Register = () => {
         title: "Missing Fields",
         text: "Please select blood group, district, and upazila.",
       });
+      setLoading(false);
       return;
     }
 
-    setLoading(true);
     try {
       // Upload avatar to imgbb and get url
       const avatarUrl = avatarFile
@@ -146,8 +142,6 @@ const Register = () => {
         role: "donor",
         status: "active",
       };
-
-      // console.log(userData);
 
       // Save user info in React context or state
       setUser(userData);
@@ -171,6 +165,7 @@ const Register = () => {
         text: err.message,
       });
     }
+
     setLoading(false);
   };
 
@@ -230,7 +225,6 @@ const Register = () => {
           type="file"
           name="avatarFile"
           accept="image/*"
-          onChange={handleChange}
           className="mb-4"
         />
 
