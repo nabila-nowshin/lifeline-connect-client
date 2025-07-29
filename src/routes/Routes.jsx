@@ -4,6 +4,8 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
+import PrivateRoute from "../provider/PrivateRoute";
+import DashboardLayout from "../pages/Dashboard/DashboardLayout";
 
 export const router = createBrowserRouter([
   {
@@ -26,16 +28,14 @@ export const router = createBrowserRouter([
       //     path: "/packages",
       //     Component: AllPackages,
       //   },
-      //   {
-      //     path: "/packages/:id",
-      //     element: (
-      //       <PrivateRoute>
-      //         <PackageDetails></PackageDetails>
-      //       </PrivateRoute>
-      //     ),
-      //     loader: ({ params }) =>
-      //       fetch(`https://journey-bay-server.vercel.app/packages/${params.id}`),
-      //   },
+      {
+        path: "/dashboard",
+        element: (
+          <PrivateRoute>
+            <DashboardLayout></DashboardLayout>
+          </PrivateRoute>
+        ),
+      },
       //   {
       //     path: "/about",
       //     Component: About,
