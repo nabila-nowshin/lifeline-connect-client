@@ -47,8 +47,8 @@ const Sidebar = () => {
 
         {role === "donor" && (
           <>
-            <NavLink to="/dashboard/my-donations" className={linkClass}>
-              <FaDonate /> My Donations
+            <NavLink to="/dashboard/my-donation-requests" className={linkClass}>
+              <FaDonate /> My Donation Requests
             </NavLink>
             <NavLink to="/dashboard/create-donation" className={linkClass}>
               <FaHandHoldingHeart /> Create Donation Request

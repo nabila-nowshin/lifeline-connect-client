@@ -6,7 +6,7 @@ import districtsData from "../assets/data/districts.json";
 import upazilasData from "../assets/data/upazilas.json";
 import { NavLink } from "react-router";
 
-const RecentDonationRequests = () => {
+const MyDonationRequests = () => {
   const { user, loading } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const [deleteId, setDeleteId] = useState(null);
@@ -25,7 +25,7 @@ const RecentDonationRequests = () => {
 
   const [editingRequest, setEditingRequest] = useState(null);
 
-  //get recent donation req info
+  //get all donation req info
   const {
     data: requests = [],
     isLoading,
@@ -33,9 +33,7 @@ const RecentDonationRequests = () => {
   } = useQuery({
     queryKey: ["recents", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/donation-requests/recent/${user.email}`
-      );
+      const res = await axiosSecure.get(`/donation-requests/${user.email}`);
       return res.data;
     },
     enabled: !loading && !!user?.email,
@@ -208,17 +206,8 @@ const RecentDonationRequests = () => {
           </div>
         </div>
       </dialog>
-
-      <div className="mt-4 text-right">
-        <NavLink
-          to="/dashboard/my-donation-requests"
-          className="btn btn-link text-primary"
-        >
-          View All My Requests
-        </NavLink>
-      </div>
     </div>
   );
 };
 
-export default RecentDonationRequests;
+export default MyDonationRequests;
