@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router";
 import Swal from "sweetalert2";
 
-// Import your JSON or fetch it
 import districtsData from "../assets/data/districts.json";
 import upazilasData from "../assets/data/upazilas.json";
 import useAuth from "../hooks/useAuth";
+import useAxiosPublic from "../hooks/axiosPublic";
 
 const IMAGEBB_API_KEY = "62eb909b082b3efc877b94928da6a4e7";
 
 const Register = () => {
   const navigate = useNavigate();
   const { createUser, updateUserProfile, setUser } = useAuth();
+  const axiosPublic = useAxiosPublic();
 
   const [districts, setDistricts] = useState([]);
   const [upazilas, setUpazilas] = useState([]);
@@ -61,15 +62,16 @@ const Register = () => {
     return uppercase && lowercase && minLength;
   };
 
+  //upload image
   const uploadAvatarToImageBB = async (file) => {
     if (!file) return null;
-    const formData = new FormData();
-    formData.append("image", file);
+    const formDataImg = new FormData();
+    formDataImg.append("image", file);
     const res = await fetch(
       `https://api.imgbb.com/1/upload?key=${IMAGEBB_API_KEY}`,
       {
         method: "POST",
-        body: formData,
+        body: formDataImg,
       }
     );
     const data = await res.json();
@@ -91,6 +93,7 @@ const Register = () => {
       upazila,
     } = formData;
 
+    // Validate password
     if (!validatePassword(password)) {
       let msg = "<strong>Password must:</strong><ul style='text-align:left'>";
       if (!/[A-Z]/.test(password))
@@ -123,17 +126,17 @@ const Register = () => {
 
     setLoading(true);
     try {
+      // Upload avatar to imgbb and get url
       const avatarUrl = avatarFile
         ? await uploadAvatarToImageBB(avatarFile)
         : "";
 
+      // Create user with Firebase auth
       await createUser(email, password);
       await updateUserProfile({ displayName: name, photoURL: avatarUrl });
 
-      // Set additional user info like bloodGroup, district, upazila, role="donor", status="active"
-      // Usually you store this in your backend DB or Firebase Firestore
-      // For now, just simulate it with setUser or a context update
-      setUser({
+      // Prepare full user data to send backend
+      const userData = {
         email,
         displayName: name,
         photoURL: avatarUrl,
@@ -142,7 +145,15 @@ const Register = () => {
         upazila,
         role: "donor",
         status: "active",
-      });
+      };
+
+      // console.log(userData);
+
+      // Save user info in React context or state
+      setUser(userData);
+
+      // Send user data to backend for storage
+      await axiosPublic.post("/users", userData);
 
       Swal.fire({
         icon: "success",
