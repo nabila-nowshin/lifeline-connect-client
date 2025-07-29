@@ -1,2 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Murecho:wght@100..900&display=swap');
+
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui"{
+  themes :light --default;
+  themes: all;
+}
+
+
+
+:root {
+  --font-sans: 'Murecho', system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+
+/* JourneyBay Light Theme */
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #1882FF;
+  --color-secondary: #3b82f6;
+  --color-accent: #64748b;
+  --color-neutral: #f8fafc;
+  --color-base-100: #ffffff;
+  --color-base-200: #d6e4ff;
+  --color-base-300: #7c93f9;
+  --color-base-content: #1e3a8a;
+}
+
+
+
+.mulish-light {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-optical-sizing: auto;
+}
+
+.mulish-regular {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-optical-sizing: auto;
+}
+
+.mulish-semibold {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-optical-sizing: auto;
+}
+
+/* Italics if needed */
+.mulish-italic {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-optical-sizing: auto;
+}
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 100%;
+  animation: gradient-x 15s ease infinite;
+}
+
