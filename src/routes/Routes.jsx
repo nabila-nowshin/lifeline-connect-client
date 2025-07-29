@@ -7,6 +7,7 @@ import NotFound from "../pages/NotFound";
 import PrivateRoute from "../provider/PrivateRoute";
 import DashboardLayout from "../pages/Dashboard/DashboardLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import MyProfile from "../pages/MyProfile";
 
 export const router = createBrowserRouter([
   {
@@ -33,13 +34,17 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         element: (
           <PrivateRoute>
-            <DashboardLayout></DashboardLayout>
+            <DashboardLayout />
           </PrivateRoute>
         ),
         children: [
           {
             index: true,
             Component: Dashboard,
+          },
+          {
+            path: "profile",
+            Component: MyProfile,
           },
         ],
       },
