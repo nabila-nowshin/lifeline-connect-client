@@ -50,8 +50,8 @@ const Sidebar = () => {
             <NavLink to="/dashboard/my-donations" className={linkClass}>
               <FaDonate /> My Donations
             </NavLink>
-            <NavLink to="/dashboard/make-donation" className={linkClass}>
-              <FaHandHoldingHeart /> Make a Donation
+            <NavLink to="/dashboard/create-donation" className={linkClass}>
+              <FaHandHoldingHeart /> Create Donation Request
             </NavLink>
           </>
         )}

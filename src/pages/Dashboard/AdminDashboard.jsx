@@ -1,7 +1,19 @@
-import React from "react";
+import React, { use } from "react";
+import { AuthContext } from "../../provider/AuthContext";
 
 const AdminDashboard = () => {
-  return <div>admin</div>;
+  const { user } = use(AuthContext);
+  return (
+    <div className="p-6">
+      <h2 className="text-2xl font-bold text-primary mb-2">
+        Welcome, {user?.displayName || "Admin"}! 🛠️
+      </h2>
+      <p className="text-base text-gray-600">
+        You have full control of the platform. Manage users, monitor donations,
+        and keep everything running smoothly.
+      </p>
+    </div>
+  );
 };
 
 export default AdminDashboard;
