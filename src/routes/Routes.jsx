@@ -6,6 +6,7 @@ import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import PrivateRoute from "../provider/PrivateRoute";
 import DashboardLayout from "../pages/Dashboard/DashboardLayout";
+import Dashboard from "../pages/Dashboard/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,12 @@ export const router = createBrowserRouter([
             <DashboardLayout></DashboardLayout>
           </PrivateRoute>
         ),
+        children: [
+          {
+            index: true,
+            Component: Dashboard,
+          },
+        ],
       },
       //   {
       //     path: "/about",
