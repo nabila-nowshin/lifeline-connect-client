@@ -11,6 +11,10 @@ const MyDonationRequests = () => {
   const axiosSecure = useAxiosSecure();
   const [deleteId, setDeleteId] = useState(null);
 
+  const [page, setPage] = useState(1);
+  const limit = 2;
+  const skip = (page - 1) * limit;
+
   const handleDelete = async () => {
     try {
       const res = await axiosSecure.delete(`/donation-requests/${deleteId}`);
@@ -25,19 +29,26 @@ const MyDonationRequests = () => {
 
   const [editingRequest, setEditingRequest] = useState(null);
 
-  //get all donation req info
+  //   get all donation req info
   const {
-    data: requests = [],
+    data: response = { requests: [], total: 0 },
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["recents", user?.email],
+    queryKey: ["recents", user?.email, page], // include page in the key for pagination
     queryFn: async () => {
-      const res = await axiosSecure.get(`/donation-requests/${user.email}`);
-      return res.data;
+      const res = await axiosSecure.get(
+        `/donation-requests/${user.email}?skip=${skip}&limit=${limit}`
+      );
+      return res.data; // expects: { requests: [], total: number }
     },
     enabled: !loading && !!user?.email,
   });
+
+  console.log("response", response);
+  const requests = response.requests;
+
+  const totalPages = Math.ceil(response.total / limit);
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
@@ -63,72 +74,112 @@ const MyDonationRequests = () => {
     }
   };
 
-  if (isLoading || requests.length === 0) return null;
+  if (isLoading) return <p className="text-center py-4">Loading...</p>;
 
   return (
     <div className="bg-white rounded-xl p-6 shadow mt-6">
       <h2 className="text-xl font-bold mb-4">Your Recent Donation Requests</h2>
       <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Recipient</th>
-              <th>Location</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Blood Group</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {requests.map((req) => (
-              <tr key={req._id}>
-                <td>{req.recipientName}</td>
-                <td>
-                  {districtsData.find((d) => d.id === req.recipientDistrict)
-                    ?.name || ""}
-                  ,{" "}
-                  {upazilasData.find((u) => u.id === req.recipientUpazila)
-                    ?.name || ""}
-                </td>
-                <td>{req.donationDate}</td>
-                <td>{req.donationTime}</td>
-                <td>{req.bloodGroup}</td>
-                <td className="capitalize">{req.status}</td>
-                <td className="flex gap-2">
-                  {req.status === "inprogress" && (
-                    <>
-                      <button className="btn btn-success btn-xs">Done</button>
-                      <button className="btn btn-error btn-xs">Cancel</button>
-                    </>
-                  )}
-                  <NavLink
-                    className="btn btn-info btn-xs"
-                    to={`/dashboard/donation-request/${req._id}`}
-                  >
-                    View
-                  </NavLink>
-                  <button
-                    className="btn btn-warning btn-xs"
-                    onClick={() => setEditingRequest(req)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-outline btn-xs"
-                    onClick={() => {
-                      setDeleteId(req._id);
-                      document.getElementById("delete_modal").showModal();
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
+        {requests.length === 0 ? (
+          <p className="text-center text-gray-500 py-8">
+            No donation requests found.
+          </p>
+        ) : (
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Recipient</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Blood Group</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {requests.map((req) => (
+                <tr key={req._id}>
+                  <td>{req.recipientName}</td>
+                  <td>
+                    {districtsData.find((d) => d.id === req.recipientDistrict)
+                      ?.name || ""}
+                    ,{" "}
+                    {upazilasData.find((u) => u.id === req.recipientUpazila)
+                      ?.name || ""}
+                  </td>
+                  <td>{req.donationDate}</td>
+                  <td>{req.donationTime}</td>
+                  <td>{req.bloodGroup}</td>
+                  <td className="capitalize">{req.status}</td>
+                  <td className="flex gap-2">
+                    {req.status === "inprogress" && (
+                      <>
+                        <button className="btn btn-success btn-xs">Done</button>
+                        <button className="btn btn-error btn-xs">Cancel</button>
+                      </>
+                    )}
+                    <NavLink
+                      className="btn btn-info btn-xs"
+                      to={`/dashboard/donation-request/${req._id}`}
+                    >
+                      View
+                    </NavLink>
+                    <button
+                      className="btn btn-warning btn-xs"
+                      onClick={() => setEditingRequest(req)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-outline btn-xs"
+                      onClick={() => {
+                        setDeleteId(req._id);
+                        document.getElementById("delete_modal").showModal();
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+
+        {/* Pagination Controls */}
+        <div className="flex justify-center mt-4 items-center gap-2">
+          <button
+            className="btn btn-sm"
+            disabled={page === 1}
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          >
+            Previous
+          </button>
+
+          {[...Array(totalPages)].map((_, idx) => {
+            const pageNum = idx + 1;
+            return (
+              <button
+                key={pageNum}
+                onClick={() => setPage(pageNum)}
+                className={`btn btn-sm ${
+                  pageNum === page ? "btn-primary" : "btn-ghost"
+                }`}
+              >
+                {pageNum}
+              </button>
+            );
+          })}
+
+          <button
+            className="btn btn-sm"
+            disabled={page === totalPages}
+            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+          >
+            Next
+          </button>
+        </div>
       </div>
 
       {/* ✅ Modal rendered once, conditionally shown */}
