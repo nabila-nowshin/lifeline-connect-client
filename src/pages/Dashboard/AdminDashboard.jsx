@@ -1,5 +1,6 @@
 import React, { use } from "react";
 import { AuthContext } from "../../provider/AuthContext";
+import Statistics from "../AdminComponents/Statistics";
 
 const AdminDashboard = () => {
   const { user } = use(AuthContext);
@@ -12,6 +13,8 @@ const AdminDashboard = () => {
         You have full control of the platform. Manage users, monitor donations,
         and keep everything running smoothly.
       </p>
+
+      <Statistics></Statistics>
     </div>
   );
 };
