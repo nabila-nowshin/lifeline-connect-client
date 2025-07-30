@@ -33,8 +33,8 @@ const Sidebar = () => {
 
         {role === "admin" && (
           <>
-            <NavLink to="/dashboard/manage-users" className={linkClass}>
-              <FaUsers /> Manage Users
+            <NavLink to="/dashboard/all-users" className={linkClass}>
+              <FaUsers /> All Users
             </NavLink>
             <NavLink to="/dashboard/manage-blogs" className={linkClass}>
               <FaBlog /> Manage Blogs
