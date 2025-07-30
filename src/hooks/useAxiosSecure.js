@@ -9,7 +9,7 @@ const useAxiosSecure = () => {
   const { user } = useContext(AuthContext);
   //   const {signOutUser}=useAuth();
   //   const navigate=useNavigate();
-  console.log(user);
+  //   console.log(user);
 
   //   console.log("🚀 ~ useAxiosSecure ~ accessToken:", user.accessToken);
   const instance = axios.create({

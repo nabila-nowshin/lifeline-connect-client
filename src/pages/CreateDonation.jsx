@@ -66,7 +66,7 @@ const CreateDonationRequest = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(user.status);
+    // console.log(user.status);
 
     if (userStatus !== "active") {
       Swal.fire({

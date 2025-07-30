@@ -22,7 +22,6 @@ const DonationRequestDetails = () => {
         setLoading(false);
       }
     };
-
     fetchRequest();
   }, [id, axiosSecure]);
 

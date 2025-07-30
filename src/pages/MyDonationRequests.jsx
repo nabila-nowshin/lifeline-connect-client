@@ -38,14 +38,14 @@ const MyDonationRequests = () => {
     queryKey: ["recents", user?.email, page], // include page in the key for pagination
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/donation-requests/${user.email}?skip=${skip}&limit=${limit}`
+        `/donation-requests/by-email/${user.email}?skip=${skip}&limit=${limit}`
       );
       return res.data; // expects: { requests: [], total: number }
     },
     enabled: !loading && !!user?.email,
   });
 
-  console.log("response", response);
+  //console.log("response", response);
   const requests = response.requests;
 
   const totalPages = Math.ceil(response.total / limit);
