@@ -36,8 +36,8 @@ const Sidebar = () => {
             <NavLink to="/dashboard/all-users" className={linkClass}>
               <FaUsers /> All Users
             </NavLink>
-            <NavLink to="/dashboard/manage-blogs" className={linkClass}>
-              <FaBlog /> Manage Blogs
+            <NavLink to="/dashboard/manage-donations" className={linkClass}>
+              <FaBlog /> Manage Donations Requests
             </NavLink>
             <NavLink to="/dashboard/fund-requests" className={linkClass}>
               <FaHandHoldingHeart /> Fund Requests

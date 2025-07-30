@@ -12,6 +12,7 @@ import CreateDonation from "../pages/CreateDonation";
 import DonationRequestDetails from "../pages/DonationRequestDetails";
 import MyDonationRequests from "../pages/MyDonationRequests";
 import AllUsers from "../pages/AdminComponents/AllUsers";
+import AllDonationRequests from "../pages/AdminComponents/AllDonationRequests";
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ export const router = createBrowserRouter([
           {
             path: "all-users",
             Component: AllUsers,
+          },
+          {
+            path: "manage-donations",
+            Component: AllDonationRequests,
           },
         ],
       },
