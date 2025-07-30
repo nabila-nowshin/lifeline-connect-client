@@ -1,5 +1,6 @@
 import React, { use } from "react";
 import { AuthContext } from "../../provider/AuthContext";
+import Statistics from "../AdminComponents/Statistics";
 
 const VolunteerDashBoard = () => {
   const { user } = use(AuthContext);
@@ -12,6 +13,7 @@ const VolunteerDashBoard = () => {
         Your efforts make a real impact. From coordinating drives to reaching
         out to donors, you’re the heart of this mission.
       </p>
+      <Statistics></Statistics>
     </div>
   );
 };

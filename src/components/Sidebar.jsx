@@ -58,11 +58,11 @@ const Sidebar = () => {
 
         {role === "volunteer" && (
           <>
-            <NavLink to="/dashboard/my-blogs" className={linkClass}>
-              <FaFileAlt /> My Blogs
+            <NavLink to="/dashboard/manage-donations" className={linkClass}>
+              <FaBlog /> Manage Donations Requests
             </NavLink>
-            <NavLink to="/dashboard/create-blog" className={linkClass}>
-              <FaPen /> Create Blog
+            <NavLink to="/dashboard/content-management" className={linkClass}>
+              <FaHandHoldingHeart /> Content Management
             </NavLink>
           </>
         )}

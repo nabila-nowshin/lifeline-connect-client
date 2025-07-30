@@ -102,11 +102,7 @@ const ContentManagement = () => {
                 </figure>
                 <div className="card-body">
                   <h2 className="card-title">{blog.title}</h2>
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: blog.ContentManagement,
-                    }}
-                  ></p>
+                  <p dangerouslySetInnerHTML={{ __html: blog.content }}></p>
                   <div className="flex items-center justify-between mt-4">
                     <span
                       className={`badge px-3 py-1 rounded-full ${

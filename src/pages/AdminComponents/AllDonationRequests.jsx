@@ -6,15 +6,16 @@ import upazilasData from "../../assets/data/upazilas.json";
 import { NavLink } from "react-router";
 import { AuthContext } from "../../provider/AuthContext";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useRole from "../../hooks/useRoles";
 
 const AllDonationRequests = () => {
   const { user, loading } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const [deleteId, setDeleteId] = useState(null);
+  const { role } = useRole();
 
   const [page, setPage] = useState(1);
   const limit = 3;
-  const skip = (page - 1) * limit;
 
   const handleDelete = async () => {
     try {
@@ -127,21 +128,28 @@ const AllDonationRequests = () => {
                     >
                       View
                     </NavLink>
-                    <button
-                      className="btn btn-warning btn-xs"
-                      onClick={() => setEditingRequest(req)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-outline btn-xs"
-                      onClick={() => {
-                        setDeleteId(req._id);
-                        document.getElementById("delete_modal").showModal();
-                      }}
-                    >
-                      Delete
-                    </button>
+                    {role === "admin" ? (
+                      <>
+                        {" "}
+                        <button
+                          className="btn btn-warning btn-xs"
+                          onClick={() => setEditingRequest(req)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-outline btn-xs"
+                          onClick={() => {
+                            setDeleteId(req._id);
+                            document.getElementById("delete_modal").showModal();
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </td>
                 </tr>
               ))}
