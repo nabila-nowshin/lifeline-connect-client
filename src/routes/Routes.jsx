@@ -15,6 +15,7 @@ import AllUsers from "../pages/AdminComponents/AllUsers";
 import AllDonationRequests from "../pages/AdminComponents/AllDonationRequests";
 import ContentManagement from "../pages/AdminComponents/ContentManagement";
 import AddBlog from "../pages/AdminComponents/AddBlog";
+import SearchDonors from "../pages/SerachDonors";
 
 export const router = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/search",
-        Component: Login,
+        Component: SearchDonors,
       },
       {
         path: "/login",
