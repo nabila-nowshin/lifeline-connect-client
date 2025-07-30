@@ -13,6 +13,8 @@ import DonationRequestDetails from "../pages/DonationRequestDetails";
 import MyDonationRequests from "../pages/MyDonationRequests";
 import AllUsers from "../pages/AdminComponents/AllUsers";
 import AllDonationRequests from "../pages/AdminComponents/AllDonationRequests";
+import ContentManagement from "../pages/AdminComponents/ContentManagement";
+import AddBlog from "../pages/AdminComponents/AddBlog";
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +73,14 @@ export const router = createBrowserRouter([
           {
             path: "manage-donations",
             Component: AllDonationRequests,
+          },
+          {
+            path: "content-management",
+            Component: ContentManagement,
+          },
+          {
+            path: "content-management/add-blog",
+            Component: AddBlog,
           },
         ],
       },
