@@ -43,7 +43,7 @@ const Login = () => {
   border border-white/50 rounded-xl shadow-xl p-8"
       >
         <h2 className="text-3xl font-bold text-center text-primary mb-6">
-          Login to JourneyBay
+          Login to BloodConnect
         </h2>
 
         <form className="space-y-4" onSubmit={handleSignIn}>

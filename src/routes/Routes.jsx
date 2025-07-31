@@ -16,6 +16,9 @@ import AllDonationRequests from "../pages/AdminComponents/AllDonationRequests";
 import ContentManagement from "../pages/AdminComponents/ContentManagement";
 import AddBlog from "../pages/AdminComponents/AddBlog";
 import SearchDonors from "../pages/SerachDonors";
+import PendingDonations from "../pages/PendingDonations";
+import BlogPage from "../pages/BlogPage";
+import BlogDetails from "../pages/BlogDetails";
 
 export const router = createBrowserRouter([
   {
@@ -31,12 +34,24 @@ export const router = createBrowserRouter([
         Component: SearchDonors,
       },
       {
+        path: "/donation",
+        Component: PendingDonations,
+      },
+      {
         path: "/login",
         Component: Login,
       },
       {
         path: "/register",
         Component: Register,
+      },
+      {
+        path: "/blogs",
+        Component: BlogPage,
+      },
+      {
+        path: "/blogs/:id",
+        Component: BlogDetails,
       },
       //   {
       //     path: "/packages",
@@ -58,17 +73,22 @@ export const router = createBrowserRouter([
             path: "profile",
             Component: MyProfile,
           },
-          {
-            path: "create-donation",
-            Component: CreateDonation,
-          },
+
           {
             path: "donation-request/:id",
-            Component: DonationRequestDetails,
+            element: (
+              <PrivateRoute>
+                <DonationRequestDetails></DonationRequestDetails>
+              </PrivateRoute>
+            ),
           },
           {
             path: "my-donation-requests",
             Component: MyDonationRequests,
+          },
+          {
+            path: "create-donation",
+            Component: CreateDonation,
           },
           // ADMIN
           {

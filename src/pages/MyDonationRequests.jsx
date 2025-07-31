@@ -1,19 +1,24 @@
 import { useContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../hooks/useAxiosSecure";
-import { AuthContext } from "../provider/AuthContext";
+
 import districtsData from "../assets/data/districts.json";
 import upazilasData from "../assets/data/upazilas.json";
 import { NavLink } from "react-router";
+import { AuthContext } from "../provider/AuthContext";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import useRole from "../hooks/useRoles";
+import Swal from "sweetalert2";
 
 const MyDonationRequests = () => {
   const { user, loading } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const [deleteId, setDeleteId] = useState(null);
+  const { role } = useRole();
+  const [statusFilter, setStatusFilter] = useState("all");
+  // console.log(role);
 
   const [page, setPage] = useState(1);
-  const limit = 2;
-  const skip = (page - 1) * limit;
+  const limit = 3;
 
   const handleDelete = async () => {
     try {
@@ -31,22 +36,27 @@ const MyDonationRequests = () => {
 
   //   get all donation req info
   const {
-    data: response = { requests: [], total: 0 },
+    data: response = { donations: [], total: 0 },
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["recents", user?.email, page], // include page in the key for pagination
+    queryKey: ["donations", page, statusFilter],
     queryFn: async () => {
+      if (!user?.email || !role) {
+        return { donations: [], total: 0 };
+      }
       const res = await axiosSecure.get(
-        `/donation-requests/by-email/${user.email}?skip=${skip}&limit=${limit}`
+        `/all-donations?page=${page}&limit=${limit}&email=${user.email}&role=${role}&status=${statusFilter}`
       );
-      return res.data; // expects: { requests: [], total: number }
+      return res.data;
     },
+
     enabled: !loading && !!user?.email,
   });
 
-  //console.log("response", response);
-  const requests = response.requests;
+  //   console.log("response", response.total);
+  //   console.log("response", response.donations);
+  const requests = response.donations;
 
   const totalPages = Math.ceil(response.total / limit);
 
@@ -74,79 +84,152 @@ const MyDonationRequests = () => {
     }
   };
 
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      const res = await axiosSecure.patch(`/donations/update-status/${id}`, {
+        status: newStatus,
+      });
+
+      if (res.data.modifiedCount > 0) {
+        Swal.fire({
+          icon: "success",
+          title: `Marked as ${
+            newStatus.charAt(0).toUpperCase() + newStatus.slice(1)
+          }`,
+          timer: 1500,
+          showConfirmButton: false,
+        });
+        refetch(); // refetch data to update UI (if using react-query)
+      } else {
+        Swal.fire({
+          icon: "info",
+          title: "No update",
+          text: "Status might already be updated.",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "Failed to update status. Try again later.",
+      });
+      console.error(error);
+    }
+  };
+
   if (isLoading) return <p className="text-center py-4">Loading...</p>;
 
   return (
     <div className="bg-white rounded-xl p-6 shadow mt-6">
-      <h2 className="text-xl font-bold mb-4">Your Recent Donation Requests</h2>
+      <h2 className="text-xl font-bold mb-4">My Donation Requests</h2>
+      {/* Status Filter Tabs */}
+      <div className="tabs tabs-boxed mb-4 w-fit">
+        {["all", "pending", "inprogress", "done", "canceled"].map((status) => (
+          <button
+            key={status}
+            className={`tab capitalize ${
+              statusFilter === status ? "tab-active" : ""
+            }`}
+            onClick={() => setStatusFilter(status)}
+          >
+            {status}
+          </button>
+        ))}
+      </div>
+
       <div className="overflow-x-auto">
+        {isLoading && <span className="loading loading-spinner text-primary" />}
         {requests.length === 0 ? (
           <p className="text-center text-gray-500 py-8">
-            No donation requests found.
+            No donation requests with status "
+            <span className="font-semibold">{statusFilter}</span>".
           </p>
         ) : (
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Recipient</th>
-                <th>Location</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Blood Group</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {requests.map((req) => (
-                <tr key={req._id}>
-                  <td>{req.recipientName}</td>
-                  <td>
-                    {districtsData.find((d) => d.id === req.recipientDistrict)
-                      ?.name || ""}
-                    ,{" "}
-                    {upazilasData.find((u) => u.id === req.recipientUpazila)
-                      ?.name || ""}
-                  </td>
-                  <td>{req.donationDate}</td>
-                  <td>{req.donationTime}</td>
-                  <td>{req.bloodGroup}</td>
-                  <td className="capitalize">{req.status}</td>
-                  <td className="flex gap-2">
-                    {req.status === "inprogress" && (
-                      <>
-                        <button className="btn btn-success btn-xs">Done</button>
-                        <button className="btn btn-error btn-xs">Cancel</button>
-                      </>
-                    )}
-                    <NavLink
-                      className="btn btn-info btn-xs"
-                      to={`/dashboard/donation-request/${req._id}`}
-                    >
-                      View
-                    </NavLink>
-                    <button
-                      className="btn btn-warning btn-xs"
-                      onClick={() => setEditingRequest(req)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-outline btn-xs"
-                      onClick={() => {
-                        setDeleteId(req._id);
-                        document.getElementById("delete_modal").showModal();
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
+          <>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Recipient</th>
+                  <th>Location</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Blood Group</th>
+                  <th>Status</th>
+                  <th>Donor Info</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+              </thead>
+              <tbody>
+                {requests.map((req) => (
+                  <tr key={req._id}>
+                    <td>{req.recipientName}</td>
+                    <td>
+                      {districtsData.find((d) => d.id === req.recipientDistrict)
+                        ?.name || ""}
+                      ,{" "}
+                      {upazilasData.find((u) => u.id === req.recipientUpazila)
+                        ?.name || ""}
+                    </td>
+                    <td>{req.donationDate}</td>
+                    <td>{req.donationTime}</td>
+                    <td>{req.bloodGroup}</td>
+                    <td className="capitalize">{req.status}</td>
+                    {req.status === "inprogress" ? (
+                      <td className="capitalize">
+                        {req.donorName},{req?.donorEmail}
+                      </td>
+                    ) : (
+                      <td></td>
+                    )}
 
+                    <td className="flex gap-2">
+                      {req.status === "inprogress" && (
+                        <>
+                          <button
+                            className="btn btn-success btn-xs btn-outline"
+                            onClick={() => handleStatusChange(req._id, "done")}
+                          >
+                            Done
+                          </button>
+                          <button
+                            className="btn btn-error btn-xs btn-outline"
+                            onClick={() =>
+                              handleStatusChange(req._id, "canceled")
+                            }
+                          >
+                            Cancel
+                          </button>
+                        </>
+                      )}
+
+                      <NavLink
+                        className="btn btn-info btn-xs btn-outline"
+                        to={`/dashboard/donation-request/${req._id}`}
+                      >
+                        View
+                      </NavLink>
+                      <button
+                        className="btn btn-warning btn-xs btn-outline"
+                        onClick={() => setEditingRequest(req)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-outline btn-xs btn-outline"
+                        onClick={() => {
+                          setDeleteId(req._id);
+                          document.getElementById("delete_modal").showModal();
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
         {/* Pagination Controls */}
         <div className="flex justify-center mt-4 items-center gap-2">
           <button
