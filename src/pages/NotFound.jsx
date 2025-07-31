@@ -1,26 +1,21 @@
 import { Link } from "react-router";
-
-import animationData from "../assets/NotFound.json";
-import Lottie from "lottie-react";
+import { FaExclamationTriangle } from "react-icons/fa";
 
 const NotFound = () => {
   return (
-    <div className="max-h-screen flex flex-col items-center justify-center bg-base-100 p-6">
-      <Lottie
-        animationData={animationData}
-        loop={true}
-        style={{ height: 300 }}
-      />
-      <h1 className="text-3xl font-bold mt-6 text-base-content">
-        Whoops! You're off the map 🌍
-      </h1>
-      <p className="text-lg text-base-content text-center mt-2 max-w-md">
-        The page you’re looking for might be lost in the Himalayas or deep in
-        the ocean.
-      </p>
-      <Link to="/" className="btn btn-primary mt-6">
-        🧭 Back to Home
-      </Link>
+    <div className="flex items-center justify-center min-h-screen bg-base-100 px-4">
+      <div className="text-center max-w-md">
+        <FaExclamationTriangle className="text-error text-6xl mx-auto mb-4" />
+        <h1 className="text-4xl font-bold text-error mb-2">
+          404 - Page Not Found
+        </h1>
+        <p className="text-base-content mb-6">
+          Oops! The page you're looking for doesn't exist or has been moved.
+        </p>
+        <Link to="/" className="btn btn-primary btn-wide">
+          Back to Home
+        </Link>
+      </div>
     </div>
   );
 };
