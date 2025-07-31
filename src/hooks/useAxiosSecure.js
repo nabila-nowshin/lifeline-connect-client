@@ -1,25 +1,34 @@
-import { useContext, useEffect } from "react";
-
 import axios from "axios";
-import { AuthContext } from "../provider/AuthContext";
-import useAuth from "./useAuth";
+import { useContext } from "react";
 import { useNavigate } from "react-router";
+import { AuthContext } from "../provider/AuthContext";
 
 const useAxiosSecure = () => {
   const { user } = useContext(AuthContext);
-  //   const {signOutUser}=useAuth();
-  //   const navigate=useNavigate();
-  //   console.log(user);
+  const navigate = useNavigate();
 
-  //   console.log("🚀 ~ useAxiosSecure ~ accessToken:", user.accessToken);
   const instance = axios.create({
     baseURL: "http://localhost:3000",
-    // headers: {
-    //   Authorization: `Bearer ${user.accessToken}`,
-    // },
   });
 
-  useEffect(() => {}, []);
+  // Interceptor to attach token and handle 401/403
+  instance.interceptors.request.use((config) => {
+    config.headers.Authorization = `Bearer ${user?.accessToken}`;
+
+    return config;
+  });
+
+  instance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        // Optional: Auto-logout on token error
+        console.warn("Unauthorized. Redirecting to login...");
+        navigate("/login");
+      }
+      return Promise.reject(error);
+    }
+  );
 
   return instance;
 };
