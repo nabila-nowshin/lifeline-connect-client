@@ -1,12 +1,34 @@
-# React + Vite
+# 🩸 Lifeline Connect - Blood Donation Management App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Site:** [lifeline-connect-78f2e.web.app](https://lifeline-connect-78f2e.web.app/)
 
-Currently, two official plugins are available:
+Lifeline Connect is a full-stack MERN application that helps connect blood donors, recipients, and volunteers on one unified platform. The system includes role-based dashboards for Admins, Volunteers, and Donors, streamlining blood request management, donation tracking, funding, and blog sharing.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+### 🔐 Authentication & Authorization
+- Firebase Authentication (Email/Password)
+- JWT Token-based secure APIs
+- Protected routes
+- Role-based access control (`Admin`, `Volunteer`, `Donor`)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 👤 User Roles & Dashboards
+- **Donors:** View and manage personal donation requests, donation history
+- **Volunteers:** View and manage all requests, verify users
+- **Admins:** Manage users, roles, blogs, funding, and requests
+
+### 📝 Core Functionalities
+- Request & manage blood donations
+- Approve, block, or verify users
+- Donation request filtering & pagination
+- Create and publish blogs with rich text editor
+- Track funding progress (Admins only)
+
+### 🌐 Tech Stack
+
+| Tech | Details |
+|------|---------|
+| **Frontend** | React, React Router, Tailwind CSS (with DaisyUI), Axios, TanStack Query |
+| **Authentication** | Firebase Auth |
+| **Backend** | Node.js, Express.js, MongoDB |
+| **Others** | JWT, imgbb image upload, SweetAlert2, Jodit React Editor |
