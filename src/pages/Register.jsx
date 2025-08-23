@@ -144,7 +144,7 @@ const Register = () => {
       };
 
       // Save user info in React context or state
-      setUser(userData);
+      //setUser(userData);
 
       // Send user data to backend for storage
       await axiosPublic.post("/users", userData);

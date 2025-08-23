@@ -33,13 +33,13 @@ const Statistics = () => {
           <div className="stat-value">{usersCount}</div>
         </div>
 
-        <div className="stat">
+        {/* <div className="stat">
           <div className="flex items-center gap-2 stat-title text-secondary">
             <HandCoins className="w-5 h-5" />
             Total Funding
           </div>
           <div className="stat-value">$4,200</div>
-        </div>
+        </div> */}
 
         <div className="stat">
           <div className="flex items-center gap-2 stat-title text-red-500">

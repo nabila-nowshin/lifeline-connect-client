@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, provider)
       .then((result) => {
         setUser(result.user);
-        toast.success(`Welcome, ${result.user.displayName || "User"}!`);
+        toast.success(`Welcome  , ${result.user.displayName || "User"}!`);
         return result.user;
       })
       .catch((error) => {
@@ -81,14 +81,6 @@ const AuthProvider = ({ children }) => {
     user,
     setUser,
   };
-
-  // if (user?.accessToken) {
-  //   localStorage.setItem("access-token", user.accessToken);
-  // } else {
-  //   localStorage.removeItem("access-token");
-  // }
-  // console.log(user.accessToken);
-
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );

@@ -74,7 +74,7 @@ const Login = () => {
           <button className="btn btn-primary w-full">Login</button>
         </form>
 
-        <div className="divider my-4">or</div>
+        {/* <div className="divider my-4">or</div>
 
         <button
           className="btn w-full border border-gray-300 hover:bg-gray-100"
@@ -86,7 +86,7 @@ const Login = () => {
             className="w-5 h-5 mr-2"
           />
           Continue with Google
-        </button>
+        </button> */}
 
         <p className="mt-6 text-center text-sm text-base-content">
           Don’t have an account?{" "}
