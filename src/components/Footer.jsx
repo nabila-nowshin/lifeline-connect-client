@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Company Info */}
         <div>
-          <h2 className="text-xl font-bold mb-3">BloodLink</h2>
+          <h2 className="text-xl font-bold mb-3">BloodConnect</h2>
           <p className="text-sm">
             Bridging life and hope—one donation at a time. Join us in saving
             lives.
@@ -44,7 +44,7 @@ const Footer = () => {
         {/* Contact Info */}
         <div>
           <h3 className="font-semibold mb-2">Contact</h3>
-          <p className="text-sm">Email: support@bloodlink.org</p>
+          <p className="text-sm">Email: support@bloodconnect.org</p>
           <p className="text-sm">Phone: +880 1234 567890</p>
           <p className="text-sm">Location: Dhaka, Bangladesh</p>
         </div>
@@ -71,7 +71,7 @@ const Footer = () => {
 
       {/* Bottom Line */}
       <div className="text-center text-sm mt-10 text-base-content/60">
-        © {new Date().getFullYear()} BloodLink. All rights reserved.
+        © {new Date().getFullYear()} BloodConnect. All rights reserved.
       </div>
     </footer>
   );

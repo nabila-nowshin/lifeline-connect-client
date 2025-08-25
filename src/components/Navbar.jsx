@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link, NavLink } from "react-router";
 import toast from "react-hot-toast";
 import { AuthContext } from "../provider/AuthContext";
+import { FaDroplet } from "react-icons/fa6";
 
 const Navbar = () => {
   const { user, signOutUser, loading } = useContext(AuthContext);
@@ -51,9 +52,10 @@ const Navbar = () => {
         <div className="navbar-start">
           <Link
             to="/"
-            className="text-xl md:text-3xl font-bold text-primary font-mono"
+            className="text-xl md:text-3xl font-bold text-primary font-mono flex items-center gap-1"
           >
-            🩸 BloodConnect
+            <FaDroplet size={24} className="text-red-500" />
+            BloodConnect
           </Link>
         </div>
 
