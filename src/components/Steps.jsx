@@ -21,14 +21,17 @@ const Steps = () => {
 
   return (
     <section className="py-16 px-4">
-      <div className="max-w-4xl mx-auto text-center mb-12">
+      <div className="max-w-4xl mx-auto text-center mb-12" data-aos="fade-left">
         <h2 className="text-3xl font-bold text-gray-800 mb-2">How It Works</h2>
         <p className="text-gray-600">
           Step-by-step process to start donating and saving lives
         </p>
       </div>
 
-      <div className="flex items-center justify-between max-w-3xl mx-auto relative">
+      <div
+        className="flex items-center justify-between max-w-3xl mx-auto relative"
+        data-aos="fade-right"
+      >
         {/* Connecting line */}
         <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-300 z-0"></div>
 

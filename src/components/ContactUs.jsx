@@ -10,7 +10,7 @@ const ContactUs = () => {
 
         <div className=" grid grid-cols-1 md:grid-cols-2 gap-10">
           {/* Contact Info */}
-          <div className="space-y-4">
+          <div className="space-y-4" data-aos="fade-right">
             <p className="text-lg">
               📞 <span className="font-medium">Phone:</span> +880 1234-567890
             </p>
@@ -28,7 +28,7 @@ const ContactUs = () => {
           </div>
 
           {/* Contact Form */}
-          <form className="space-y-4">
+          <form className="space-y-4" data-aos="fade-left">
             <input
               type="text"
               placeholder="Your Name"

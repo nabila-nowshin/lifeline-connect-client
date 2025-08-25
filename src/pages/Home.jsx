@@ -4,6 +4,7 @@ import Featured from "../components/Featured";
 import ContactUs from "../components/ContactUs";
 import Steps from "../components/Steps";
 import Statistics from "../components/Statistics";
+import WhoCanDonate from "../components/WhoCanDonate";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <Featured></Featured>
       <Steps></Steps>
       <Statistics></Statistics>
+      <WhoCanDonate></WhoCanDonate>
       <ContactUs></ContactUs>
     </div>
   );

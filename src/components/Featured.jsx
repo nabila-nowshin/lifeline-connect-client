@@ -9,7 +9,11 @@ const Featured = () => {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="p-6 shadow-md rounded-xl bg-base-200 text-center">
+          <div
+            className="p-6 shadow-md rounded-xl bg-base-200 text-center"
+            data-aos="fade-up"
+            data-aos-anchor-placement="bottom-bottom"
+          >
             <FaHeartbeat className="text-4xl text-red-500 mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">
               Real-Time Donor Match
@@ -20,7 +24,11 @@ const Featured = () => {
             </p>
           </div>
 
-          <div className="p-6 shadow-md rounded-xl bg-base-200 text-center">
+          <div
+            className="p-6 shadow-md rounded-xl bg-base-200 text-center"
+            data-aos="fade-up"
+            data-aos-anchor-placement="bottom-bottom"
+          >
             <FaHandHoldingHeart className="text-4xl text-pink-500 mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">Secure & Trusted</h3>
             <p>
@@ -29,7 +37,11 @@ const Featured = () => {
             </p>
           </div>
 
-          <div className="p-6 shadow-md rounded-xl bg-base-200 text-center">
+          <div
+            className="p-6 shadow-md rounded-xl bg-base-200 text-center"
+            data-aos="fade-up"
+            data-aos-anchor-placement="bottom-bottom"
+          >
             <FaShieldAlt className="text-4xl text-blue-500 mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">Track Your Impact</h3>
             <p>
