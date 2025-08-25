@@ -20,31 +20,35 @@ const Steps = () => {
   ];
 
   return (
-    <section className="py-16 px-4">
-      <div className="max-w-4xl mx-auto text-center mb-12" data-aos="fade-left">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">How It Works</h2>
-        <p className="text-gray-600">
+    <section className="py-16 px-4 bg-base-200">
+      <div className="max-w-7xl mx-auto text-center mb-12" data-aos="fade-left">
+        <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+          How It Works
+        </h2>
+        <p className="text-base-content/70 text-lg">
           Step-by-step process to start donating and saving lives
         </p>
       </div>
 
       <div
-        className="flex items-center justify-between max-w-3xl mx-auto relative"
+        className="relative max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between"
         data-aos="fade-right"
       >
         {/* Connecting line */}
-        <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-300 z-0"></div>
+        <div className="absolute top-1/2 left-4 right-4 h-1 bg-base-300 z-0 hidden md:block"></div>
 
         {steps.map((step, idx) => (
           <div
             key={idx}
-            className="relative z-10 flex flex-col items-center text-center w-1/3 transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
+            className="relative z-10 flex flex-col items-center text-center mb-8 md:mb-0 w-full md:w-1/3 transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
           >
-            <div className="w-12 h-12 rounded-full border-2 border-gray-800 flex items-center justify-center mb-2 bg-white transition-colors duration-300 hover:border-primary hover:text-primary">
+            <div className="w-14 h-14 rounded-full border-2 border-base-content flex items-center justify-center mb-3 bg-base-100 text-base-content transition-colors duration-300 hover:border-primary hover:text-primary">
               {step.icon}
             </div>
-            <h3 className="text-lg font-semibold">{step.title}</h3>
-            <p className="text-gray-600 text-sm">{step.desc}</p>
+            <h3 className="text-lg font-semibold text-base-content mb-1">
+              {step.title}
+            </h3>
+            <p className="text-base-content/70 text-sm">{step.desc}</p>
           </div>
         ))}
       </div>

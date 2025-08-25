@@ -8,11 +8,11 @@ export default function DonationGuidelines() {
   ];
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-base-100">
       <div className="max-w-5xl mx-auto px-6 text-center">
         <h2
-          className="text-3xl font-bold text-red-600 mb-10"
-          data-aos="fade-up"
+          className="text-3xl md:text-4xl font-bold text-primary mb-10"
+          data-aos="fade-left"
         >
           Donation Guidelines
         </h2>
@@ -21,11 +21,11 @@ export default function DonationGuidelines() {
           {guidelines.map((guide, index) => (
             <div
               key={index}
-              data-aos="fade-up"
+              data-aos="fade-right"
               data-aos-delay={index * 150}
-              className="p-6 bg-gray-50 rounded-2xl shadow hover:shadow-lg transition"
+              className="p-6 bg-base-200 rounded-2xl shadow hover:shadow-xl transition-shadow duration-300 cursor-pointer"
             >
-              <p className="text-lg font-medium text-gray-700">{guide}</p>
+              <p className="text-lg font-medium text-base-content">{guide}</p>
             </div>
           ))}
         </div>
@@ -33,7 +33,7 @@ export default function DonationGuidelines() {
         <p
           data-aos="fade-up"
           data-aos-delay={guidelines.length * 150}
-          className="mt-8 text-gray-600 text-lg"
+          className="mt-8 text-base-content/70 text-lg"
         >
           ✅ Following these steps ensures a safe and smooth donation process.
         </p>

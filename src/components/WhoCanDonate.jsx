@@ -8,11 +8,11 @@ export default function WhoCanDonate() {
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-base-200">
       <div className="max-w-5xl mx-auto px-6 text-center">
         <h2
-          className="text-3xl font-bold text-red-600 mb-10"
-          data-aos="fade-up"
+          className="text-3xl md:text-4xl font-bold text-primary mb-10"
+          data-aos="fade-right"
         >
           Who Can Donate?
         </h2>
@@ -21,11 +21,11 @@ export default function WhoCanDonate() {
           {rules.map((rule, index) => (
             <div
               key={index}
-              data-aos="fade-up"
+              data-aos="fade-right"
               data-aos-delay={index * 150}
-              className="p-6 bg-white rounded-2xl shadow hover:shadow-lg transition"
+              className="p-6 bg-base-100 rounded-2xl shadow hover:shadow-xl transition-shadow duration-300 cursor-pointer"
             >
-              <p className="text-lg font-medium text-gray-700">{rule}</p>
+              <p className="text-lg font-medium text-base-content">{rule}</p>
             </div>
           ))}
         </div>
@@ -33,7 +33,7 @@ export default function WhoCanDonate() {
         <p
           data-aos="fade-up"
           data-aos-delay={rules.length * 150}
-          className="mt-8 text-gray-600 text-lg"
+          className="mt-8 text-base-content/70 text-lg"
         >
           💡 If you fit these, congratulations—you’re a potential lifesaver!
         </p>

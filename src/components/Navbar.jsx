@@ -3,10 +3,12 @@ import { Link, NavLink } from "react-router";
 import toast from "react-hot-toast";
 import { AuthContext } from "../provider/AuthContext";
 import { FaDroplet } from "react-icons/fa6";
+import { ThemeContext } from "../provider/ThemeContext";
+import { FiMoon, FiSun } from "react-icons/fi";
 
 const Navbar = () => {
   const { user, signOutUser, loading } = useContext(AuthContext);
-
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const handleLogout = () => {
     signOutUser()
       .then(() => toast.success("Logged out successfully"))
@@ -68,6 +70,13 @@ const Navbar = () => {
 
         {/* Right - User / Auth */}
         <div className="navbar-end space-x-4">
+          <button onClick={toggleTheme} className="btn btn-sm btn-ghost">
+            {theme === "caramellatte" ? (
+              <FiMoon className="text-base-content w-6 h-6" />
+            ) : (
+              <FiSun className="text-yellow-400 w-6 h-6" />
+            )}
+          </button>
           {/* Mobile Dropdown */}
           <div className="dropdown lg:hidden">
             <div tabIndex={0} role="button" className="btn btn-ghost">

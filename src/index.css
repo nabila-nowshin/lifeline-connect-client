@@ -2,7 +2,7 @@
 
 @import "tailwindcss";
 @plugin "daisyui"{
-  themes :light --default;
+  themes : caramellatte --default;
   themes: all;
 }
 
@@ -17,19 +17,7 @@ body {
 }
 
 
-/* JourneyBay Light Theme */
-@plugin "daisyui/theme" {
-  name: "light";
-  default: true;
-  --color-primary: #1882FF;
-  --color-secondary: #3b82f6;
-  --color-accent: #64748b;
-  --color-neutral: #f8fafc;
-  --color-base-100: #ffffff;
-  --color-base-200: #d6e4ff;
-  --color-base-300: #7c93f9;
-  --color-base-content: #1e3a8a;
-}
+
 
 
 

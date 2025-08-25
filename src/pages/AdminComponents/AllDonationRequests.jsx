@@ -120,7 +120,7 @@ const AllDonationRequests = () => {
   if (isLoading) return <p className="text-center py-4">Loading...</p>;
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow mt-6">
+    <div className="bg-base-100 rounded-xl p-6 shadow mt-6">
       <h2 className="text-xl font-bold mb-4">All Donation Requests</h2>
       {/* Status Filter Tabs */}
       <div className="tabs tabs-boxed mb-4 w-fit">
@@ -146,95 +146,100 @@ const AllDonationRequests = () => {
           </p>
         ) : (
           <>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Recipient</th>
-                  <th>Location</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Blood Group</th>
-                  <th>Status</th>
-                  <th>Donor Info</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {requests.map((req) => (
-                  <tr key={req._id}>
-                    <td>{req.recipientName}</td>
-                    <td>
-                      {districtsData.find((d) => d.id === req.recipientDistrict)
-                        ?.name || ""}
-                      ,{" "}
-                      {upazilasData.find((u) => u.id === req.recipientUpazila)
-                        ?.name || ""}
-                    </td>
-                    <td>{req.donationDate}</td>
-                    <td>{req.donationTime}</td>
-                    <td>{req.bloodGroup}</td>
-                    <td className="capitalize">{req.status}</td>
-                    {req.status === "inprogress" ? (
-                      <td className="capitalize">
-                        {req.donorName},{req?.donorEmail}
-                      </td>
-                    ) : (
-                      <td></td>
-                    )}
-
-                    <td className="flex gap-2">
-                      {req.status === "inprogress" && (
-                        <>
-                          <button
-                            className="btn btn-success btn-xs  btn-outline"
-                            onClick={() => handleStatusChange(req._id, "done")}
-                          >
-                            Done
-                          </button>
-                          <button
-                            className="btn btn-error btn-xs  btn-outline"
-                            onClick={() =>
-                              handleStatusChange(req._id, "canceled")
-                            }
-                          >
-                            Cancel
-                          </button>
-                        </>
-                      )}
-
-                      <NavLink
-                        className="btn btn-info btn-xs btn-outline"
-                        to={`/dashboard/donation-request/${req._id}`}
-                      >
-                        View
-                      </NavLink>
-                      {role === "admin" && (
-                        <>
-                          {" "}
-                          <button
-                            className="btn  btn-xs btn-outline btn-warning"
-                            onClick={() => setEditingRequest(req)}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className="btn btn-xs btn-outline"
-                            onClick={() => {
-                              setDeleteId(req._id);
-                              document
-                                .getElementById("delete_modal")
-                                .showModal();
-                            }}
-                          >
-                            Delete
-                          </button>
-                        </>
-                      )}
-                    </td>
+            <div className="overflow-x-auto shadow rounded-lg border border-base-300">
+              <table className="table table-zebra">
+                <thead className="bg-base-200">
+                  <tr>
+                    <th>Recipient</th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Blood Group</th>
+                    <th>Status</th>
+                    <th>Donor Info</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {requests.map((req) => (
+                    <tr key={req._id}>
+                      <td>{req.recipientName}</td>
+                      <td>
+                        {districtsData.find(
+                          (d) => d.id === req.recipientDistrict
+                        )?.name || ""}
+                        ,{" "}
+                        {upazilasData.find((u) => u.id === req.recipientUpazila)
+                          ?.name || ""}
+                      </td>
+                      <td>{req.donationDate}</td>
+                      <td>{req.donationTime}</td>
+                      <td>{req.bloodGroup}</td>
+                      <td className="capitalize">{req.status}</td>
+                      {req.status === "inprogress" ? (
+                        <td className="capitalize">
+                          {req.donorName},{req?.donorEmail}
+                        </td>
+                      ) : (
+                        <td></td>
+                      )}
+
+                      <td className="flex gap-2">
+                        {req.status === "inprogress" && (
+                          <>
+                            <button
+                              className="btn btn-success btn-xs  btn-outline"
+                              onClick={() =>
+                                handleStatusChange(req._id, "done")
+                              }
+                            >
+                              Done
+                            </button>
+                            <button
+                              className="btn btn-error btn-xs  btn-outline"
+                              onClick={() =>
+                                handleStatusChange(req._id, "canceled")
+                              }
+                            >
+                              Cancel
+                            </button>
+                          </>
+                        )}
+
+                        <NavLink
+                          className="btn btn-info btn-xs btn-outline"
+                          to={`/dashboard/donation-request/${req._id}`}
+                        >
+                          View
+                        </NavLink>
+                        {role === "admin" && (
+                          <>
+                            {" "}
+                            <button
+                              className="btn  btn-xs btn-outline btn-warning"
+                              onClick={() => setEditingRequest(req)}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              className="btn btn-xs btn-outline"
+                              onClick={() => {
+                                setDeleteId(req._id);
+                                document
+                                  .getElementById("delete_modal")
+                                  .showModal();
+                              }}
+                            >
+                              Delete
+                            </button>
+                          </>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </>
         )}
         {/* Pagination Controls */}

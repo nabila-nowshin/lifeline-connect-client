@@ -36,42 +36,67 @@ const PendingDonations = () => {
 
   return (
     <div className="rounded-xl p-6 mt-6">
-      <div className="max-w-7xl mx-auto px-4 bg-white py-5 rounded-2xl shadow">
-        <h2 className="text-xl font-bold mb-4">Donation Requests</h2>
+      <div className="max-w-7xl mx-auto px-4 bg-base-100 py-5 rounded-2xl shadow">
+        <h2 className="text-xl font-bold mb-4 text-base-content">
+          Donation Requests
+        </h2>
+
         <div className="overflow-x-auto">
           {requests.length === 0 ? (
-            <p className="text-center text-gray-500 py-8">
+            <p className="text-center text-base-content/60 py-8">
               No donation requests found.
             </p>
           ) : (
-            <table className="table">
-              <thead>
+            <table className="w-full border-collapse border border-base-300 text-base-content">
+              <thead className="bg-base-200">
                 <tr>
-                  <th>Recipient</th>
-                  <th>Location</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Blood Group</th>
-                  <th>Status</th>
-                  <th>Actions</th>
+                  {[
+                    "Recipient",
+                    "Location",
+                    "Date",
+                    "Time",
+                    "Blood Group",
+                    "Status",
+                    "Actions",
+                  ].map((header, idx) => (
+                    <th
+                      key={idx}
+                      className="border border-base-300 px-4 py-2 text-left"
+                    >
+                      {header}
+                    </th>
+                  ))}
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-base-100">
                 {requests.map((req) => (
-                  <tr key={req._id}>
-                    <td>{req.recipientName}</td>
-                    <td>
+                  <tr
+                    key={req._id}
+                    className="hover:bg-base-200 transition-colors"
+                  >
+                    <td className="border border-base-300 px-4 py-2">
+                      {req.recipientName}
+                    </td>
+                    <td className="border border-base-300 px-4 py-2">
                       {districtsData.find((d) => d.id === req.recipientDistrict)
                         ?.name || ""}
                       ,{" "}
                       {upazilasData.find((u) => u.id === req.recipientUpazila)
                         ?.name || ""}
                     </td>
-                    <td>{req.donationDate}</td>
-                    <td>{req.donationTime}</td>
-                    <td>{req.bloodGroup}</td>
-                    <td className="capitalize">{req.status}</td>
-                    <td className="flex gap-2">
+                    <td className="border border-base-300 px-4 py-2">
+                      {req.donationDate}
+                    </td>
+                    <td className="border border-base-300 px-4 py-2">
+                      {req.donationTime}
+                    </td>
+                    <td className="border border-base-300 px-4 py-2">
+                      {req.bloodGroup}
+                    </td>
+                    <td className="border border-base-300 px-4 py-2 capitalize">
+                      {req.status}
+                    </td>
+                    <td className="border border-base-300 px-4 py-2 flex gap-2">
                       <NavLink
                         className="btn btn-info btn-xs"
                         to={`/dashboard/donation-request/${req._id}`}

@@ -6,6 +6,7 @@ import Steps from "../components/Steps";
 import Statistics from "../components/Statistics";
 import WhoCanDonate from "../components/WhoCanDonate";
 import DonationGuidelines from "../components/DonationGuidelines";
+import Testimonials from "../components/Testimonials";
 
 const Home = () => {
   return (
@@ -16,6 +17,7 @@ const Home = () => {
       <Statistics></Statistics>
       <WhoCanDonate></WhoCanDonate>
       <DonationGuidelines></DonationGuidelines>
+      <Testimonials></Testimonials>
       <ContactUs></ContactUs>
     </div>
   );

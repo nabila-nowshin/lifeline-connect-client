@@ -53,10 +53,6 @@ export const router = createBrowserRouter([
         path: "/blogs/:id",
         Component: BlogDetails,
       },
-      //   {
-      //     path: "/packages",
-      //     Component: AllPackages,
-      //   },
       {
         path: "/dashboard",
         element: (
