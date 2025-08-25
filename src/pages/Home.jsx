@@ -5,6 +5,7 @@ import ContactUs from "../components/ContactUs";
 import Steps from "../components/Steps";
 import Statistics from "../components/Statistics";
 import WhoCanDonate from "../components/WhoCanDonate";
+import DonationGuidelines from "../components/DonationGuidelines";
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
       <Steps></Steps>
       <Statistics></Statistics>
       <WhoCanDonate></WhoCanDonate>
+      <DonationGuidelines></DonationGuidelines>
       <ContactUs></ContactUs>
     </div>
   );
