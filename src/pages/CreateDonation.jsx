@@ -152,7 +152,7 @@ const CreateDonationRequest = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-md shadow-md mt-10">
+    <div className="max-w-3xl mx-auto p-6 bg-base-100 rounded-md shadow-md mt-10">
       <h2 className="text-2xl font-bold mb-6 text-primary">
         Create Donation Request
       </h2>
@@ -164,7 +164,7 @@ const CreateDonationRequest = () => {
             name="requesterName"
             value={formData.requesterName}
             readOnly
-            className="input input-bordered w-full bg-gray-100 cursor-not-allowed"
+            className="input input-bordered w-full bg-base-200/20 cursor-not-allowed"
           />
         </div>
 
@@ -175,7 +175,7 @@ const CreateDonationRequest = () => {
             name="requesterEmail"
             value={formData.requesterEmail}
             readOnly
-            className="input input-bordered w-full bg-gray-100 cursor-not-allowed"
+            className="input input-bordered w-full bg-base-200/20 cursor-not-allowed"
           />
         </div>
 

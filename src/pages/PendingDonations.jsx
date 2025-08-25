@@ -47,7 +47,7 @@ const PendingDonations = () => {
               No donation requests found.
             </p>
           ) : (
-            <table className="w-full border-collapse border border-base-300 text-base-content">
+            <table className="w-full border-collapse border border-base-300 text-base-content table-zebra">
               <thead className="bg-base-200">
                 <tr>
                   {[
@@ -74,29 +74,19 @@ const PendingDonations = () => {
                     key={req._id}
                     className="hover:bg-base-200 transition-colors"
                   >
-                    <td className="border border-base-300 px-4 py-2">
-                      {req.recipientName}
-                    </td>
-                    <td className="border border-base-300 px-4 py-2">
+                    <td className=" px-4 py-2">{req.recipientName}</td>
+                    <td className=" px-4 py-2">
                       {districtsData.find((d) => d.id === req.recipientDistrict)
                         ?.name || ""}
                       ,{" "}
                       {upazilasData.find((u) => u.id === req.recipientUpazila)
                         ?.name || ""}
                     </td>
-                    <td className="border border-base-300 px-4 py-2">
-                      {req.donationDate}
-                    </td>
-                    <td className="border border-base-300 px-4 py-2">
-                      {req.donationTime}
-                    </td>
-                    <td className="border border-base-300 px-4 py-2">
-                      {req.bloodGroup}
-                    </td>
-                    <td className="border border-base-300 px-4 py-2 capitalize">
-                      {req.status}
-                    </td>
-                    <td className="border border-base-300 px-4 py-2 flex gap-2">
+                    <td className=" px-4 py-2">{req.donationDate}</td>
+                    <td className=" px-4 py-2">{req.donationTime}</td>
+                    <td className=" px-4 py-2">{req.bloodGroup}</td>
+                    <td className=" px-4 py-2 capitalize">{req.status}</td>
+                    <td className=" px-4 py-2 flex gap-2">
                       <NavLink
                         className="btn btn-info btn-xs"
                         to={`/dashboard/donation-request/${req._id}`}

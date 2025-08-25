@@ -120,7 +120,7 @@ const MyDonationRequests = () => {
   if (isLoading) return <p className="text-center py-4">Loading...</p>;
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow mt-6">
+    <div className="bg-base-100 border-base-200 rounded-xl p-6 shadow mt-6">
       <h2 className="text-xl font-bold mb-4">My Donation Requests</h2>
       {/* Status Filter Tabs */}
       <div className="tabs tabs-boxed mb-4 w-fit">
@@ -145,9 +145,9 @@ const MyDonationRequests = () => {
             <span className="font-semibold">{statusFilter}</span>".
           </p>
         ) : (
-          <>
-            <table className="table">
-              <thead>
+          <div className="overflow-x-auto shadow rounded-lg border border-base-300">
+            <table className="table table-zebra">
+              <thead className="bg-base-200">
                 <tr>
                   <th>Recipient</th>
                   <th>Location</th>
@@ -228,7 +228,7 @@ const MyDonationRequests = () => {
                 ))}
               </tbody>
             </table>
-          </>
+          </div>
         )}
         {/* Pagination Controls */}
         <div className="flex justify-center mt-4 items-center gap-2">

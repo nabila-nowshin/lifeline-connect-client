@@ -19,6 +19,7 @@ import SearchDonors from "../pages/SerachDonors";
 import PendingDonations from "../pages/PendingDonations";
 import BlogPage from "../pages/BlogPage";
 import BlogDetails from "../pages/BlogDetails";
+import FAQ from "../pages/FAQ";
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +55,14 @@ export const router = createBrowserRouter([
         Component: BlogDetails,
       },
       {
+        path: "faq",
+        element: (
+          <PrivateRoute>
+            <FAQ></FAQ>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/dashboard",
         element: (
           <PrivateRoute>
@@ -69,7 +78,6 @@ export const router = createBrowserRouter([
             path: "profile",
             Component: MyProfile,
           },
-
           {
             path: "donation-request/:id",
             element: (

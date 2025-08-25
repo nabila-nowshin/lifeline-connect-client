@@ -2,7 +2,11 @@ import React from "react";
 
 const ContactUs = () => {
   return (
-    <section className="bg-base-100 py-16 px-4 md:px-10">
+    <section
+      className="bg-base-100 py-16 px-4 md:px-10 relative"
+      style={{ scrollMarginTop: "80px" }}
+      id="contact"
+    >
       <div className="max-w-7xl mx-auto px-4">
         <h2
           className="text-3xl md:text-4xl font-bold text-center text-primary mb-10"
